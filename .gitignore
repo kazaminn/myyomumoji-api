@@ -1,0 +1,32 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+env
+env.*
+
+# Cache files
+cache/
+parcel-cache/
+nyc_output/
+
+# Firebase Secret Key
+serviceAccountKey.json
+
+.env.development
+.env.test
+.env.production
+
+.claude
