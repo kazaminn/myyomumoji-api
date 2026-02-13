@@ -1,21 +1,14 @@
-import { simulate } from "@bjornlu/colorblind";
-import type {
-  RGB,
-  ColorblindResult,
-  ColorblindSimulation,
-} from "@/types";
-import { rgbToHex } from "@/utils/color";
 import { contrastRatio } from "@/services/wcag";
+import type { ColorblindResult, ColorblindSimulation, RGB } from "@/types";
+import { rgbToHex } from "@/utils/color";
+import { simulate } from "@bjornlu/colorblind";
 
-type ColorblindType =
-  | "protanopia"
-  | "deuteranopia"
-  | "tritanopia";
+type ColorblindType = "protanopia" | "deuteranopia" | "tritanopia";
 
 function simulateAndEvaluate(
   fg: RGB,
   bg: RGB,
-  type: ColorblindType
+  type: ColorblindType,
 ): ColorblindSimulation {
   const simFg = simulate(fg, type);
   const simBg = simulate(bg, type);
@@ -28,17 +21,10 @@ function simulateAndEvaluate(
   };
 }
 
-export function evaluateColorblind(
-  fg: RGB,
-  bg: RGB
-): ColorblindResult {
+export function evaluateColorblind(fg: RGB, bg: RGB): ColorblindResult {
   return {
     protanopia: simulateAndEvaluate(fg, bg, "protanopia"),
-    deuteranopia: simulateAndEvaluate(
-      fg,
-      bg,
-      "deuteranopia"
-    ),
+    deuteranopia: simulateAndEvaluate(fg, bg, "deuteranopia"),
     tritanopia: simulateAndEvaluate(fg, bg, "tritanopia"),
   };
 }

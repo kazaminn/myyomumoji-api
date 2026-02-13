@@ -1,15 +1,9 @@
+import { AppError, buildErrorResponse } from "@/utils/errors";
 import type { Context } from "hono";
-import {
-  AppError,
-  buildErrorResponse,
-} from "@/utils/errors";
 
 export function errorHandler(err: Error, c: Context) {
   if (err instanceof AppError) {
-    return c.json(
-      buildErrorResponse(err),
-      err.statusCode as 400
-    );
+    return c.json(buildErrorResponse(err), err.statusCode as 400);
   }
 
   console.error("Unexpected error:", err);
@@ -22,6 +16,6 @@ export function errorHandler(err: Error, c: Context) {
         message: "サーバー内部エラーが発生しました",
       },
     },
-    500
+    500,
   );
 }

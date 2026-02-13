@@ -1,18 +1,18 @@
+import { evaluateApca } from "@/services/apca";
+import { evaluateColorblind } from "@/services/colorblind";
+import { evaluateWcag, isLargeText } from "@/services/wcag";
 import type {
   BatchValidationData,
   ColorPair,
   ValidationResult,
   ValidationSummary,
 } from "@/types";
-import { parseHex, normalizeHex } from "@/utils/color";
-import { evaluateWcag, isLargeText } from "@/services/wcag";
-import { evaluateApca } from "@/services/apca";
-import { evaluateColorblind } from "@/services/colorblind";
+import { normalizeHex, parseHex } from "@/utils/color";
 
 export function validateBatch(
   colors: ColorPair[],
   fontSize: number,
-  fontWeight: number
+  fontWeight: number,
 ): BatchValidationData {
   const results: ValidationResult[] = colors.map((pair) => {
     const fg = parseHex(pair.foreground);
@@ -38,7 +38,7 @@ export function validateBatch(
 function buildSummary(
   results: ValidationResult[],
   fontSize: number,
-  fontWeight: number
+  fontWeight: number,
 ): ValidationSummary {
   const large = isLargeText(fontSize, fontWeight);
 
@@ -47,19 +47,12 @@ function buildSummary(
   let apcaGood = 0;
 
   for (const r of results) {
-    const aa = large
-      ? r.wcag.largeText.aa
-      : r.wcag.normalText.aa;
-    const aaa = large
-      ? r.wcag.largeText.aaa
-      : r.wcag.normalText.aaa;
+    const aa = large ? r.wcag.largeText.aa : r.wcag.normalText.aa;
+    const aaa = large ? r.wcag.largeText.aaa : r.wcag.normalText.aaa;
 
     if (aa) wcagAAPassed++;
     if (aaa) wcagAAAPassed++;
-    if (
-      r.apca.rating === "good" ||
-      r.apca.rating === "excellent"
-    ) {
+    if (r.apca.rating === "good" || r.apca.rating === "excellent") {
       apcaGood++;
     }
   }

@@ -1,9 +1,7 @@
-import { calcAPCA, fontLookupAPCA } from "apca-w3";
 import type { ApcaResult } from "@/types";
+import { calcAPCA, fontLookupAPCA } from "apca-w3";
 
-function getRating(
-  absLc: number
-): ApcaResult["rating"] {
+function getRating(absLc: number): ApcaResult["rating"] {
   if (absLc >= 75) return "excellent";
   if (absLc >= 60) return "good";
   if (absLc >= 45) return "marginal";
@@ -13,7 +11,7 @@ function getRating(
 export function evaluateApca(
   fgHex: string,
   bgHex: string,
-  fontWeight: number
+  fontWeight: number,
 ): ApcaResult {
   const lc = calcAPCA(fgHex, bgHex);
   const absLc = Math.abs(lc);

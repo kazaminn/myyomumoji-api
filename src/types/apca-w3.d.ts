@@ -11,7 +11,7 @@ declare module "apca-w3" {
     textColor: string | number,
     bgColor: string | number,
     places?: number,
-    round?: boolean
+    round?: boolean,
   ): number;
 
   /**
@@ -23,16 +23,13 @@ declare module "apca-w3" {
    *   [1..9] = minimum font size (px) for weights 100..900.
    *   999 = too low contrast, 777 = non-text only.
    */
-  export function fontLookupAPCA(
-    contrast: number,
-    places?: number
-  ): number[];
+  export function fontLookupAPCA(contrast: number, places?: number): number[];
 
   export function sRGBtoY(rgb: [number, number, number]): number;
 
   export function APCAcontrast(
     txtY: number,
     bgY: number,
-    places?: number
+    places?: number,
   ): number;
 }

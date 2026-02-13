@@ -8,9 +8,9 @@ export function parseHex(hex: string): RGB {
   }
 
   return {
-    r: parseInt(h.slice(0, 2), 16),
-    g: parseInt(h.slice(2, 4), 16),
-    b: parseInt(h.slice(4, 6), 16),
+    r: Number.parseInt(h.slice(0, 2), 16),
+    g: Number.parseInt(h.slice(2, 4), 16),
+    b: Number.parseInt(h.slice(4, 6), 16),
   };
 }
 

@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { hexColorSchema } from "@/schemas/common";
+import { z } from "zod";
 
 const VALID_FONT_WEIGHTS = [
   100, 200, 300, 400, 500, 600, 700, 800, 900,
@@ -18,10 +18,8 @@ export const batchRequestSchema = z.object({
     .number()
     .refine(
       (v): v is (typeof VALID_FONT_WEIGHTS)[number] =>
-        (VALID_FONT_WEIGHTS as readonly number[]).includes(
-          v
-        ),
-      "有効なフォントウェイト（100〜900、100刻み）を指定してください"
+        (VALID_FONT_WEIGHTS as readonly number[]).includes(v),
+      "有効なフォントウェイト（100〜900、100刻み）を指定してください",
     )
     .default(400),
 });
