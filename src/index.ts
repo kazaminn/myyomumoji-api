@@ -39,10 +39,12 @@ app.route("/api", routes);
 
 app.onError(errorHandler);
 
-const port = Number(process.env.PORT) || 3000;
+if (process.env.NODE_ENV !== "test") {
+  const port = Number(process.env.PORT) || 3000;
 
-serve({ fetch: app.fetch, port }, (info) => {
-  console.log(`Server running at http://localhost:${info.port}`);
-});
+  serve({ fetch: app.fetch, port }, (info) => {
+    console.log(`Server running at http://localhost:${info.port}`);
+  });
+}
 
 export default app;
