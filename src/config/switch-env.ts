@@ -1,5 +1,4 @@
 import path from "node:path";
-import { config } from "dotenv";
 
 // NODE_ENVが未設定の場合のデフォルト値
 const getEnv = (): "test" | "development" | "production" => {
@@ -10,14 +9,14 @@ const getEnv = (): "test" | "development" | "production" => {
 
 const env = getEnv();
 
-// 環境に応じたファイルを読み込み
-const envFile = {
-  test: ".env.test",
-  development: ".env.development",
-  production: ".env.production",
-}[env];
-
-config({ path: path.resolve(process.cwd(), envFile) });
+// 本番(Cloud Functions)は環境変数がランタイムから提供されるため不要
+// FUNCTION_TARGET は Firebase CLI のコード分析時に設定される
+const isFirebaseContext = process.env.K_SERVICE || process.env.FUNCTION_TARGET;
+if (env !== "production" && !isFirebaseContext) {
+  const envFile = env === "test" ? ".env.test" : ".env.development";
+  const { config } = await import("dotenv");
+  config({ path: path.resolve(process.cwd(), envFile) });
+}
 
 export const ENV = {
   NODE_ENV: env,

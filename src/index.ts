@@ -39,7 +39,7 @@ app.route("/api", routes);
 
 app.onError(errorHandler);
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV !== "test" && !process.env.K_SERVICE && !process.env.FUNCTION_TARGET) {
   const port = Number(process.env.PORT) || 3000;
 
   serve({ fetch: app.fetch, port }, (info) => {
